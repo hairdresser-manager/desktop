@@ -1,6 +1,6 @@
 <template>
-  <div>
-    Dashboard
+  <div class="dashboard pl-3 pt-3">
+    <h1>Dashboard</h1>
   </div>
 </template>
 
@@ -12,3 +12,4 @@ export default {
   }
 }
 </script>
+

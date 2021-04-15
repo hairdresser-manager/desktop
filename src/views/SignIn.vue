@@ -1,24 +1,7 @@
 <template>
-
-
-    <v-form v-model="signin">
-        <v-col cols="12" sm="6" md="3">
-            Login
-            <v-text-field label="" outlined v-model="name"></v-text-field>
-        </v-col>
-
-        <v-col cols="12" sm="6" md="3">
-            Password
-            <v-text-field label="" outlined v-model="form.password"></v-text-field>
-        </v-col>
-        <div>
-            <v-btn elevation="2" outlined
-                color="success"
-                class="mr-4"
-                @click="validate">Sign in</v-btn>
-        </div>
-    </v-form>
-    
+    <div class="signin pl-3 pt-3">
+        <h1>Sign in</h1>
+    </div>
 </template>
 
 <script>
@@ -28,18 +11,16 @@ export default {
 
   },
 
-  data () {
+  data() {
       return {
-          form: {
-              email: '',
-              password: '',
-          }
+          name: '',
+          password: '',
       }
   },
 
   methods: {
-      signin () {
-          console.log('submitted')
+      submit () {
+          console.log(this.name, this.password)
       }
   }
 }
