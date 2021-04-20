@@ -3,7 +3,7 @@
         <v-app-bar>
             <v-container>
                 <v-row>
-                <v-btn depressed>
+                <v-btn depressed route :to="'/home'">
                     <v-img
                     :src="require('../assets/logo.png')"
                     contain
@@ -27,36 +27,46 @@
                 <v-spacer></v-spacer>
 
                 <v-btn class="red-btn mx-3" outlined dark>book now</v-btn>
-                    <v-btn text>
-                        <v-icon class="mr-3">mdi-account-circle</v-icon>
-                        Login in
-                    </v-btn>
+                <v-btn v-if="!isLogged" text route :to="'/login'">
+                    <v-icon class="mr-3">mdi-account-circle</v-icon>
+                    Login in
+                </v-btn>
+                <v-btn v-else v-on:click="logout" text>
+                    <v-icon class="mr-3">mdi-logout</v-icon>
+                    Logout
+                </v-btn>
                 </v-row>
             </v-container>
         </v-app-bar>
-        <v-img
-        :src="require('../assets/banner.png')"
-        contain
-        height="auto"
-        />
-        <div class="home__Box"><h2>our services</h2></div>
+        
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
     name: 'Header',
     data() {
         return {
             menuItems: [
-                { title: 'Home', path: '/home' },
                 { title: 'Our service', path: '/services' },
                 { title: 'Meet the team', path: '/team'},
                 { title: 'Reviews', path: '/reviews'}
             ]
         }
-    }
+    },
+    computed: mapGetters([
+        'isLogged'
+    ]),
+    methods: {
+        logout() {
+            this.$store.dispatch('logout')
+        }
+    },
+
 }
+    
 
 </script>
 

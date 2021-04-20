@@ -6,6 +6,10 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 
+import interceptorsSetup from './helpers/interceptors'
+
+interceptorsSetup()
+
 new Vue({
   router,
   store,

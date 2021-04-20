@@ -19,15 +19,7 @@ export default {
   components: {
     Header
   },
-  computed: {
-    isLoggedIn : function(){ return this.$store.getters.isAuthenticated}
-  },
-  methods: {
-      async logout (){
-        await this.$store.dispatch('LogOut')
-        this.$router.push('/login')
-      }
-    },
+
 
 };
 </script>

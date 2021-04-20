@@ -1,4 +1,5 @@
 <template>
+  <v-container>
   <v-row class="carousel" align="center">
     <v-divider></v-divider>
     <v-img
@@ -17,64 +18,23 @@
         />
     <v-divider></v-divider>
     </v-row>
-    <swiper class="swiper" :options="swiperOption">
-    <swiper-slide>Slide 1</swiper-slide>
-    <swiper-slide>Slide 2</swiper-slide>
-    <swiper-slide>Slide 3</swiper-slide>
-    <swiper-slide>Slide 4</swiper-slide>
-    <swiper-slide>Slide 5</swiper-slide>
-    <swiper-slide>Slide 6</swiper-slide>
-    <swiper-slide>Slide 7</swiper-slide>
-    <swiper-slide>Slide 8</swiper-slide>
-    <swiper-slide>Slide 9</swiper-slide>
-    <div class="swiper-pagination" slot="pagination"></div>
-    <div class="swiper-button-prev" slot="button-prev"></div>
-    <div class="swiper-button-next" slot="button-next"></div>
-    </swiper>
+    <Slider />
+    </v-container>
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-  import 'swiper/css/swiper.css'
+  import Slider from './Swiper'
 
   export default {
-    name: 'swiper-example-loop-group',
-    title: 'Loop mode with multiple slides per group',
+    name: 'Carousel',
     components: {
-      Swiper,
-      SwiperSlide
-    },
-    data() {
-      return {
-        swiperOption: {
-          slidesPerView: 3,
-          spaceBetween: 30,
-          slidesPerGroup: 3,
-          loop: true,
-          loopFillGroupWithBlank: true,
-          pagination: {
-            el: '.swiper-pagination',
-            clickable: true
-          },
-          navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
-          }
-        }
-      }
+      Slider
     }
   }
 </script>
 
-<style scoped>
-
-.carousel{
-  padding-top: 100px;
-}
-
-.v-divider{
-  background-color: #E10050;
-}
-
-
+<style lang="scss" scoped>
+  .v-divider{
+    background-color: #E10050;
+  }
 </style>

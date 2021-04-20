@@ -1,20 +1,33 @@
 <template>
-  <v-container class="home">
-    <Expansion :lists="lists"/>
-    
-    <Carousel />
-  </v-container>
+  <div>
+    <div class="banner">
+       <v-img
+        :src="require('../assets/banner.png')"
+        contain
+        height="auto"
+        />
+        <div class="home__Box"><h2>our services</h2></div>
+    </div>
+    <v-container class="home">
+      <Expansion :lists="lists"/>
+      <Carousel />
+      <Reviews /> 
+    </v-container>
+  </div>
+  
 </template>
 
 <script>
 import Expansion from '../components/Expansion'
 import Carousel from '../components/Carousel'
+import Reviews from '../components/Reviews'
 
 export default {
   name: 'home',
   components: {
     Expansion,
-    Carousel
+    Carousel,
+    Reviews
   },
 
   data() {
@@ -33,7 +46,6 @@ export default {
     }
   }
 
-  
 }
 </script>
 
@@ -54,7 +66,13 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.home{
+
+.banner{
   position: relative;
 }
+
+.carousel{
+  padding-top: 100px;
+}
+
 </style>

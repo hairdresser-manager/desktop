@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center" class="expansion">
+  <v-row class="expansion">
     <v-expansion-panels accordion>
       <v-expansion-panel
         v-for="list in lists"
