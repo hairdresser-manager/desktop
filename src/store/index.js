@@ -2,47 +2,85 @@ import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import router from '../router'
 
 Vue.use(Vuex)
-
-const types = {
-  LOGIN: 'LOGIN',
-  LOGOUT: 'LOGOUT'
-}
+//axios.default.baseURL = 'http://localhost:8080/api/v1'
 
 const state = {
-  logged: localStorage.getItem('token')
+  token: localStorage.getItem('accessToken') || null,
+  refreshToken: localStorage.getItem('refreshToken') || null
 }
 
 const getters = {
-  isLogged: state => state.logged
+  loggedIn(state) {
+    return state.token !== null
+  }
+
 }
 
 const actions = {
-  login ({commit}, data) {
-    axios.post('http://localhost:8080/api/v1/login', data)
-      .then((result) => {
-        localStorage.setItem('token', result.data.accessToken)
-        commit(types.LOGIN)
-        router.push({path: '/home'})
-      })
+  register(context, data) {
+    return new Promise((resolve, reject) => {
+      axios.post('http://localhost:8080/api/v1/register', data)
+        .then(result => {
+          resolve(result)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
   },
 
-  logout({commit}) {
-    localStorage.removeItem('token')
-    commit(types.LOGOUT)
-    router.push({path: '/login'})
-  }
+  login (context, data) {
+    return new Promise((resolve, reject) => {
+      axios.post('http://localhost:8080/api/v1/login', data)
+        .then(result => {
+          const token = result.data;
+          const tokens = { access: token.accessToken, refresh: token.refreshToken}
+          localStorage.setItem('accessToken', token.accessToken)
+          localStorage.setItem('refreshToken', token.refreshToken)
+          context.commit('retreiveTokens', tokens)
+          resolve(result)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+    
+  },
+
+
+  logout(context) {
+    if(context.getters.loggedIn) {
+      return new Promise((resolve, reject) => {
+        axios.post('http://localhost:8080/api/v1/logout', context.state.refreshToken)
+          .then(response => {
+            localStorage.removeItem('accessToken')
+            localStorage.removeItem('refreshToken')
+            context.commit('destroyTokens')
+            resolve(response)
+          })
+          .catch(error => {
+            localStorage.removeItem('accessToken')
+            localStorage.removeItem('refreshToken')
+            context.commit('destroyTokens')
+            reject(error)
+          })
+
+      })  
+    }
+  },
 }
 
-const mutations = {
-  [types.LOGIN] (state) {
-    state.logged = 1;
-  },
 
-  [types.LOGOUT] (state) {
-    state.logged = 0;
+const mutations = {
+  retreiveTokens(state, accessToken) {
+    state.token = accessToken.access,
+    state.refreshToken = accessToken.refresh
+  },
+  destroyTokens(state) {
+    state.token = null,
+    state.refreshToken = null
   }
 }
 

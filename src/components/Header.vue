@@ -22,19 +22,38 @@
                         {{ item.title}}
                     </v-btn>
                 </v-toolbar-items>
-                
 
                 <v-spacer></v-spacer>
 
                 <v-btn class="red-btn mx-3" outlined dark>book now</v-btn>
-                <v-btn v-if="!isLogged" text route :to="'/login'">
+                <v-btn v-if="!loggedIn" text route :to="'/login'">
                     <v-icon class="mr-3">mdi-account-circle</v-icon>
                     Login in
                 </v-btn>
-                <v-btn v-else v-on:click="logout" text>
-                    <v-icon class="mr-3">mdi-logout</v-icon>
-                    Logout
-                </v-btn>
+                <v-menu v-if="loggedIn" offset-y>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                        color="primary"
+                        dark
+                        v-bind="attrs"
+                        v-on="on"
+                        >
+                        Dropdown
+                        </v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-item
+                        v-for="(item, index) in items"
+                        :key="index"
+                        >
+                        <v-list-item-title>
+                            <v-btn :to="item.path">
+                                {{ item.title }}
+                            </v-btn>
+                        </v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                    </v-menu>
                 </v-row>
             </v-container>
         </v-app-bar>
@@ -43,8 +62,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
     name: 'Header',
     data() {
@@ -53,21 +70,20 @@ export default {
                 { title: 'Our service', path: '/services' },
                 { title: 'Meet the team', path: '/team'},
                 { title: 'Reviews', path: '/reviews'}
+            ],
+            items: [
+                { title: 'Profile', path: '/userprofile', icon: 'mdi-account-circle'},
+                { title: 'Logout', path: '/logout', icon: 'mdi-logout'}
             ]
         }
     },
-    computed: mapGetters([
-        'isLogged'
-    ]),
-    methods: {
-        logout() {
-            this.$store.dispatch('logout')
+    computed: {
+        loggedIn() {
+            return this.$store.getters.loggedIn
         }
-    },
-
+    }
 }
     
-
 </script>
 
 <style>

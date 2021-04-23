@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   name: 'signup',
   components: {
@@ -61,22 +60,19 @@ export default {
   },
 
   methods: {
-      signup () {
-          const data = {
-              email: this.email,
-              password: this.password,
-              reTypedPassword: this.reTypePassword,
-              firstname: this.firstname,
-              secondname: this.secondname,
-              mobilePhone: this.mobilePhone
-          }
+    signup () {
+        const data = {
+            email: this.email,
+            password: this.password,
+            reTypedPassword: this.reTypePassword,
+            firstname: this.firstname,
+            secondname: this.secondname,
+            mobilePhone: this.mobilePhone
+        }
 
-          axios.post('http://localhost:8080/api/v1/register', data)
-          .then(result => {
-              console.log(result)
-              this.$router.push('/home')
-          })
-          .catch(err => console.log(err))
+    this.$store.dispatch('register', data)
+        .then(() => this.$router.push({path: '/login'}))
+
       }
   }
 }

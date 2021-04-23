@@ -15,7 +15,7 @@
                             <v-col>
                                 <v-btn route :to="'/signup'" text>Zarejestruj się</v-btn>
                                 <v-spacer></v-spacer>
-                                <v-btn text>Przypomnij hasło</v-btn>
+                                <v-btn text>Zresetuj hasło</v-btn>
                             </v-col>
                         </v-row>
                         
@@ -31,49 +31,10 @@
             </v-card>
         </v-row>
     </v-container>
-    
 </template>
 
 <script>
-
 export default {
-  name: 'login',
-  components: {
-
-  },
-
-  data() {
-      return {
-          email: '',
-          password: '',
-      }
-  },
-
-  methods: {
-    login () {
-
-          const data = {
-              email: this.email,
-              password: this.password
-          }
-
-          this.$store.dispatch('login', data)
-
-      },
-
-      logInWithFacebook () {
-          console.log(this.name, this.password)
-      }
-
-  }
+    name: 'passwordrecovery',
 }
 </script>
-
-
-<style scoped>
-
-h2{
-    color: rgba(0, 0, 0, 0.57);
-}
-
-</style>
