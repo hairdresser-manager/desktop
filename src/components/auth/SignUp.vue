@@ -2,7 +2,7 @@
     <v-container>   
         <v-row justify="center">
             <v-card class="w-100" width="100%" max-width="720px">
-                <h2 class="text-center py-5">Zarejestruj się do hairdresser</h2>
+                <h2 class="text-center py-5 sub-title">Zarejestruj się do hairdresser</h2>
                 <v-form>
                     <v-col>
                         <v-text-field label="Email" type="text" outlined v-model="email"></v-text-field>
@@ -77,10 +77,3 @@ export default {
   }
 }
 </script>
-
-
-<style scoped>
-h2{
-    color: rgba(0, 0, 0, 0.57);
-}
-</style>

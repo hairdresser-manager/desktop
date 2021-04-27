@@ -23,7 +23,13 @@
       <v-divider></v-divider>
     </div>
     <v-row justify="center" class="py-5 mt-5">
-      <v-btn class="red-btn mx-3" outlined dark>Load more</v-btn>
+      <v-btn 
+        class="red-btn mx-3" 
+        outlined 
+        dark
+        v-if="visible"
+        @click="loadMore"
+      >Load more</v-btn>
     </v-row>
     
   </v-container>
@@ -40,11 +46,28 @@ import Review from './Review'
 
     data() {
       return {
-        reviews: [
-          { name: "Natalie", initials: "N", text: "Great experience! Looking forward to my hair growth journey....", date: "Jan 28 2021" },
-          { name: "Natalie", initials: "N", text: "Great experience! Looking forward to my hair growth journey....", date: "Jan 28 2021" },
-          { name: "Natalie", initials: "N", text: "Great experience! Looking forward to my hair growth journey....", date: "Jan 28 2021" } 
-        ]
+        visible: true,
+        pagination: {
+          page: 1,
+          perPage: 3,
+        },
+        reviews: []
+      }
+    },
+    created() {
+      this.$store.dispatch('fetchReviews', this.pagination)
+        .then(result => this.reviews = result.data)
+    },
+    methods: {
+      loadMore() {
+        const data = {
+          page: this.pagination.page,
+          perPage: this.pagination.perPage
+        }
+        data.perPage = 10
+        this.$store.dispatch('fetchReviews', data)
+          .then(result => this.reviews = result.data)
+        this.visible = false
       }
     }
   }

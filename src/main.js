@@ -7,10 +7,8 @@ import vuetify from './plugins/vuetify';
 Vue.config.productionTip = false
 
 import interceptorsSetup from './helpers/interceptors'
-import parseJwt from './helpers/interceptors'
 
 interceptorsSetup()
-parseJwt()
 
 new Vue({
   router,

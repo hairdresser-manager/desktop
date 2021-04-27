@@ -2,10 +2,33 @@
     <v-container>   
         <v-row justify="center">
             <v-card class="w-100" width="100%" max-width="720px">
-                <h2 class="text-center py-5">Zaloguj się do hairdresser</h2>
-                <v-form>
+                <h2 class="text-center py-5 sub-title">Zaloguj się do hairdresser</h2>
+                <div v-if="error">
+                    <v-list 
+                        dense>
+                        <v-list-item
+                        v-for="(item, index) in getMessage"
+                        :key="index"
+                        >
+                        <v-list-item-title>
+                            <div  
+                            v-for="(item, index) in item"
+                            :key="index">
+                                {{item}}
+                            </div>
+                        </v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </div>
+                <v-form v-model="valid">
                     <v-col>
-                        <v-text-field label="Email" outlined v-model="email"></v-text-field>
+                        <v-text-field 
+                            v-model="email"
+                            :rules="emailRules"
+                            label="E-mail"
+                            required
+                            outlined
+                        ></v-text-field>
                     </v-col>
                     <v-col >
                         <v-text-field label="Password" type="password" outlined v-model="password"></v-text-field>
@@ -15,7 +38,7 @@
                             <v-col>
                                 <v-btn route :to="'/signup'" text>Zarejestruj się</v-btn>
                                 <v-spacer></v-spacer>
-                                <v-btn text>Zresetuj hasło</v-btn>
+                                <v-btn text :to="'/passwordrecovery'">Zresetuj hasło</v-btn>
                             </v-col>
                         </v-row>
                         
@@ -23,12 +46,14 @@
                             width="100%"
                             class="my-3"
                             color="#E10050"
+                            :disabled="!valid"
                             @click="login">Login</v-btn>
                         <v-row align="center" class="px-5 py-5"><v-divider></v-divider><span class="px-5 grey--text text--darken-1">or</span><v-divider></v-divider></v-row>
                         <v-btn @click="logInWithFacebook" width="100%" color="primary" class="my-3"> Login with Facebook</v-btn>
                     </v-col>
                 </v-form>
             </v-card>
+            
         </v-row>
     </v-container>
     
@@ -43,11 +68,21 @@ export default {
 
   data() {
       return {
-          email: '',
-          password: '',
+        valid: false,
+        email: '',
+        emailRules: [
+            v => !!v || 'E-mail is required',
+            v => /.+@.+/.test(v) || 'E-mail must be valid',
+        ],
+        error: false,
+        password: '',
       }
   },
-
+  computed: {
+    getMessage() {
+        return this.$store.state.message
+    }  
+  },
   methods: {
     login () {
         const data = {
@@ -56,6 +91,9 @@ export default {
         }
         this.$store.dispatch('login', data)
             .then(() => this.$router.push({path: '/home'}))
+            .catch(() => {
+                this.error = true
+            })
     },
 
     logInWithFacebook () {
@@ -64,11 +102,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-h2{
-    color: rgba(0, 0, 0, 0.57);
-}
-
-</style>

@@ -4,7 +4,11 @@ import Home from '../views/Home.vue'
 import SignUp from '../components/auth/SignUp'
 import Login from '../components/auth/Login'
 import Logout from '../components/auth/Logout'
-import Profile from '../views/UserProfile'
+import Profile from '../views/UserBoard'
+import PasswordRecovery from '../components/auth/PasswordRecovery'
+import UserProfile from '../components/userboard/UserProfile'
+import UserAppointments from '../components/userboard/UserAppointments'
+import UserReviews from '../components/userboard/UserReviews'
 
 Vue.use(VueRouter)
 
@@ -30,10 +34,33 @@ const routes = [
     component: Logout
   },
   {
-    path: '/userprofile',
-    name: 'userprofile',
-    component: Profile
-  }
+    path: '/userboard',
+    name: 'userboard',
+    component: Profile,
+      children: [
+        {
+          path: 'userprofile',
+          name: 'userprofile',
+          component: UserProfile
+        },
+        {
+          path: 'userappointments',
+          name: 'userappointments',
+          component: UserAppointments
+        },
+        {
+          path: 'userreviews',
+          name: 'userreviews',
+          component: UserReviews
+        },
+      ]
+  },
+  {
+    path: '/passwordrecovery',
+    name: 'passwordrecovery',
+    component: PasswordRecovery
+  },
+  
     
   
 ]

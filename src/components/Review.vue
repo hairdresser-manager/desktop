@@ -14,12 +14,12 @@
                     color="orange"
                     size="24"
                     readonly
-                    :value="3"
+                    :value="review.rate"
                     length="5"
                     ></v-rating>
                     <v-subheader>{{ review.date }}</v-subheader>
                 </v-row>
-                <p class="mb-0">{{ review.text }}</p>
+                <p class="mb-0">{{ review.description }}</p>
             </v-col>
         </v-row>
     </v-container>

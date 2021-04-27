@@ -30,30 +30,17 @@
                     <v-icon class="mr-3">mdi-account-circle</v-icon>
                     Login in
                 </v-btn>
-                <v-menu v-if="loggedIn" offset-y>
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                        color="primary"
-                        dark
-                        v-bind="attrs"
-                        v-on="on"
-                        >
-                        Dropdown
-                        </v-btn>
-                    </template>
-                    <v-list>
-                        <v-list-item
-                        v-for="(item, index) in items"
-                        :key="index"
-                        >
-                        <v-list-item-title>
-                            <v-btn :to="item.path">
-                                {{ item.title }}
-                            </v-btn>
-                        </v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                    </v-menu>
+                <v-btn 
+                    v-if="loggedIn"
+                    class="red-btn"
+                    light
+                    text
+                    route
+                    :to="'/userboard'"
+                    >
+                    <v-icon class="mr-3">mdi-account-circle</v-icon>
+                    Profile
+                    </v-btn>
                 </v-row>
             </v-container>
         </v-app-bar>
@@ -74,14 +61,17 @@ export default {
             items: [
                 { title: 'Profile', path: '/userprofile', icon: 'mdi-account-circle'},
                 { title: 'Logout', path: '/logout', icon: 'mdi-logout'}
-            ]
+            ],
         }
     },
     computed: {
         loggedIn() {
             return this.$store.getters.loggedIn
+        },
+        getUser() {
+            return this.$store.getters.getUser
         }
-    }
+    },
 }
     
 </script>

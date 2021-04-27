@@ -41,8 +41,13 @@ export default {
         { title: "Blow Out and Style", text: " This service is recommended for clients with relaxed , or fine textured hair. We shampoo , condition, and blow out the hair before styling", price: "$65.00+" }
       ]
       },
-      
+
       ]
+    }
+  },
+  methods: {
+    fetchReviews() {
+      this.$store.dispatch('fetchReviews')
     }
   }
 
