@@ -5,27 +5,16 @@
                 <v-row>
                 <v-btn depressed route :to="'/home'">
                     <v-img
-                    :src="require('../assets/logo.png')"
+                    :src="require('./assets/logo.png')"
                     contain
                     height="20"
                     />
                     Hairdresser
                 </v-btn>
                 <v-spacer></v-spacer>
-
-                <v-toolbar-items>
-                    <v-btn 
-                        depressed
-                        v-for="item in menuItems"
-                        :key="item.title"
-                        :to="item.path">
-                        {{ item.title}}
-                    </v-btn>
-                </v-toolbar-items>
-
-                <v-spacer></v-spacer>
-
-                <v-btn class="red-btn mx-3" outlined dark>book now</v-btn>
+        
+                <v-btn class="red-btn mx-3" outlined dark @click.stop="showSchedule=true">book now</v-btn>
+                <ScheduleForm v-model="showSchedule" />
                 <v-btn v-if="!loggedIn" text route :to="'/login'">
                     <v-icon class="mr-3">mdi-account-circle</v-icon>
                     Login in
@@ -49,20 +38,20 @@
 </template>
 
 <script>
+import ScheduleForm from './components/schedule/ScheduleForm'
 export default {
     name: 'Header',
     data() {
         return {
-            menuItems: [
-                { title: 'Our service', path: '/services' },
-                { title: 'Meet the team', path: '/team'},
-                { title: 'Reviews', path: '/reviews'}
-            ],
             items: [
                 { title: 'Profile', path: '/userprofile', icon: 'mdi-account-circle'},
                 { title: 'Logout', path: '/logout', icon: 'mdi-logout'}
             ],
+            showSchedule: false
         }
+    },
+    components: {
+        ScheduleForm
     },
     computed: {
         loggedIn() {

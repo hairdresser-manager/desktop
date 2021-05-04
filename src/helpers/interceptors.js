@@ -3,9 +3,10 @@ import axios from 'axios';
 
 export default function setup() {
     axios.interceptors.request.use(function(config) {
-        const token = localStorage.getItem('token');
+        
+        const token = JSON.parse(localStorage.getItem('user'));
         if(token) {
-            config.headers.Authorization = `Bearer ${token}`;
+            config.headers.Authorization = `Bearer ${token.accessToken}`;
         }
         return config;
     }, function(err) {

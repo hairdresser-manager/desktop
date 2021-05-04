@@ -3,28 +3,48 @@
         <v-row justify="center">
             <v-card class="w-100" width="100%" max-width="720px">
                 <h2 class="text-center py-5 sub-title">Zarejestruj się do hairdresser</h2>
-                <v-form>
+                <div v-if="error" class="alert alert-danger">
+                    <v-list 
+                        dense>
+                        <v-list-item>
+                        <v-list-item-title class="red--text">
+                            {{ getMessage }}
+                        </v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </div>
+                <div v-if="success" class="alert alert-danger">
+                    <v-list 
+                        dense>
+                        <v-list-item>
+                        <v-list-item-title class="green--text">
+                            Potwierdz adres email
+                        </v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </div>
+                <v-form >
                     <v-col>
-                        <v-text-field label="Email" type="text" outlined v-model="email"></v-text-field>
+                        <v-text-field label="Email" type="text" outlined v-model="email" hide-details></v-text-field>
                     </v-col>
-                    <v-col >
-                        <v-text-field label="Password" type="password" outlined v-model="password"></v-text-field>
+                    <v-col>
+                        <v-text-field label="Password" type="password" outlined v-model="password" hide-details></v-text-field>
                     </v-col>
-                    <v-col >
-                        <v-text-field label="ReTypePassword" type="password" outlined v-model="reTypedPassword"></v-text-field>
+                    <v-col>
+                        <v-text-field label="ReTypePassword" type="password" outlined v-model="reTypedPassword" hide-details></v-text-field>
                     </v-col>
                     <v-col>
                         <v-row>
                             <v-col>
-                            <v-text-field label="first name" outlined v-model="firstname"></v-text-field>
+                                <v-text-field label="First name" outlined v-model="firstname" hide-details></v-text-field>
                             </v-col>
                             <v-col>
-                                <v-text-field label="second name" outlined v-model="lastname"></v-text-field>
+                                <v-text-field label="Last name" outlined v-model="lastname" hide-details></v-text-field>
                             </v-col>
                         </v-row>
                     </v-col>
                     <v-col>
-                        <v-text-field label="mobilePhone" length="9" outlined v-model="mobilePhone"></v-text-field>
+                        <v-text-field label="Mobile phone" length="9" outlined v-model="mobilePhone" hide-details></v-text-field>
                     </v-col>
                     
                     <v-col>
@@ -54,25 +74,35 @@ export default {
             reTypedPassword: '',
             firstname: '',
             lastname: '',
-            mobilePhone: ''
-          
+            mobilePhone: '',
+            error: false,
+            success: false,
       }
   },
-
+  computed: {
+    getMessage() {
+        return this.$store.state.message
+    }  
+  },
   methods: {
     signup () {
         const data = {
             email: this.email,
             password: this.password,
-            reTypedPassword: this.reTypePassword,
+            reTypedPassword: this.reTypedPassword,
             firstname: this.firstname,
-            secondname: this.secondname,
+            lastname: this.lastname,
             mobilePhone: this.mobilePhone
         }
+        console.log(data)
 
     this.$store.dispatch('register', data)
-        .then(() => this.$router.push({path: '/login'}))
-
+        .then(() => {
+            this.success = true
+        })
+        .catch(() => {
+            this.error = true
+        })
       }
   }
 }

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Header from './components/Header'
+import Header from './Header'
 
 export default {
   name: "App",
@@ -42,6 +42,10 @@ export default {
 .red-btn span{
   border-color: #E10050;
   color: #E10050;
+}
+
+h1,h2,h3,h4,h5,h6{
+  color: #383734;
 }
 
 .sub-title{

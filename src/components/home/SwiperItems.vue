@@ -1,41 +1,57 @@
 <template>
-  <swiper class="swiper" :options="swiperOption">
-    <swiper-slide class="slide-1"></swiper-slide>
-    <swiper-slide class="slide-2"></swiper-slide>
-    <swiper-slide class="slide-3"></swiper-slide>
-    <swiper-slide class="slide-1"></swiper-slide>
-    <div class="swiper-pagination" slot="pagination"></div>
+ 
+  <swiper 
+    class="swiper" 
+    effect="fade" 
+    :options="swiperOption" 
+    >
+    <swiper-slide 
+      v-for="member in items"
+      :key="member.id">
+        {{ member.firstName }}
+      </swiper-slide>
+      
+      
+      
     <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
     <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
   </swiper>
+
+  
 </template>
 
 <script>
   import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-  import 'swiper/swiper-bundle.css'
+  import 'swiper/css/swiper.css'
 
   export default {
-    name: 'Slider',
-    title: 'Multiple slides per view',
+    name: 'SwiperItems',
     components: {
       Swiper,
       SwiperSlide
     },
     data() {
       return {
+        items: [],
         swiperOption: {
           slidesPerView: 3,
           spaceBetween: 30,
-          pagination: {
-            el: '.swiper-pagination',
-            clickable: true
-          },
+          slidesPerGroup: 1,
+          loop: true,
+          loopFillGroupWithBlank: false,
           navigation: {
             nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
-          }
+            prevEl: '.swiper-button-prev',
+          },
         }
       }
+    },
+    created() {
+      this.$store.dispatch('fetchMembers')
+        .then(result => {
+          this.items = result.data
+          })
+        .catch(error => console.log(error))
     }
   }
 </script>
@@ -52,13 +68,13 @@
       background-size: cover;
 
       &.slide-1 {
-        background-image:url('../assets/slide_1.png')
+        background-image:url('../../assets/slide_1.png')
       }
       &.slide-2 {
-        background-image:url('../assets/slide_2.png')
+        background-image:url('../../assets/slide_2.png')
       }
       &.slide-3 {
-        background-image:url('../assets/slide_3.png')
+        background-image:url('../../assets/slide_3.png')
       }
     }
   }

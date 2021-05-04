@@ -6,11 +6,11 @@
         contain
         height="auto"
         />
-        <div class="home__Box"><h2>our services</h2></div>
+        <div class="home__Box text-h5" v-text="'our services'"></div>
     </div>
     <v-container class="home">
-      <Expansion :lists="lists"/>
-      <Carousel />
+      <Expansion :lists="expansionLists"/>
+      <Swiper />
       <Reviews /> 
     </v-container>
   </div>
@@ -18,38 +18,32 @@
 </template>
 
 <script>
-import Expansion from '../components/Expansion'
-import Carousel from '../components/Carousel'
-import Reviews from '../components/Reviews'
+import Expansion from '../components/home/Expansion'
+import Swiper from '../components/home/Swiper'
+import Reviews from '../components/home/Reviews'
 
 export default {
   name: 'home',
   components: {
     Expansion,
-    Carousel,
+    Swiper,
     Reviews
   },
 
   data() {
     return {
-      lists: [
-      { title: "Popular services", text: "Precision cut shaped to your request . Styling not included in this price" },
-      { 
-      title: "Hair Care / Cut / Styling", 
-      content: [
-        { title: "Hair Cut", text: "Precision cut shaped to your request . Styling not included in this price", price: "$40.00+" },
-        { title: "Blow Out and Style", text: " This service is recommended for clients with relaxed , or fine textured hair. We shampoo , condition, and blow out the hair before styling", price: "$65.00+" }
-      ]
-      },
-
-      ]
+      expansionLists: [
+        { title: "Popular services", text: "Precision cut shaped to your request . Styling not included in this price" },
+        { 
+          title: "Hair Care / Cut / Styling", 
+          content: [
+            { title: "Hair Cut", text: "Precision cut shaped to your request . Styling not included in this price", price: "$40.00+" },
+            { title: "Blow Out and Style", text: " This service is recommended for clients with relaxed , or fine textured hair. We shampoo , condition, and blow out the hair before styling", price: "$65.00+" }
+          ]
+        },
+      ],
     }
   },
-  methods: {
-    fetchReviews() {
-      this.$store.dispatch('fetchReviews')
-    }
-  }
 
 }
 </script>

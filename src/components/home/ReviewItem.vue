@@ -5,9 +5,9 @@
             color="primary"
             size="56"
             class="mr-3"
-            ><span class="white--text headline">{{ review.initials }}</span></v-avatar>
+            ><span class="white--text headline">{{ getInitials() }}</span></v-avatar>
             <v-col>
-                <h3>{{ review.name }}</h3>
+                <h3>{{ review.nick }}</h3>
                 <v-row align="center" class="mb-1">
                     <v-rating
                     background-color="orange lighten-3"
@@ -30,6 +30,11 @@
         name: 'Review',
         props: {
             review: Object
+        },
+        methods: {
+            getInitials() {
+                return this.review.nick.slice(0,1)
+            }
         }
     }
 </script>

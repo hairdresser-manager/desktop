@@ -6,16 +6,9 @@
                 <div v-if="error">
                     <v-list 
                         dense>
-                        <v-list-item
-                        v-for="(item, index) in getMessage"
-                        :key="index"
-                        >
-                        <v-list-item-title>
-                            <div  
-                            v-for="(item, index) in item"
-                            :key="index">
-                                {{item}}
-                            </div>
+                        <v-list-item>
+                        <v-list-item-title class="red--text">
+                            {{ getMessage }}
                         </v-list-item-title>
                         </v-list-item>
                     </v-list>
@@ -28,10 +21,11 @@
                             label="E-mail"
                             required
                             outlined
+                            hide-details
                         ></v-text-field>
                     </v-col>
                     <v-col >
-                        <v-text-field label="Password" type="password" outlined v-model="password"></v-text-field>
+                        <v-text-field label="Password" type="password" outlined v-model="password" hide-details></v-text-field>
                     </v-col>
                     <v-col>
                         <v-row>
@@ -96,9 +90,11 @@ export default {
             })
     },
 
-    logInWithFacebook () {
-        console.log(this.name, this.password)
-    }
+    async logInWithFacebook () {
+        console.log(this.email, this.password)
+    },
+    
+
   }
 }
 </script>

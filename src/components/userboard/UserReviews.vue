@@ -1,5 +1,7 @@
 <template>
-    <h1>User Reviews</h1>
+    <v-card class="mx-auto pa-6" >
+        <h2>User Reviews</h2>
+    </v-card>
 </template>
 
 <script>

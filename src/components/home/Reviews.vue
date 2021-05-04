@@ -3,7 +3,7 @@
     <v-row align="center" class="reviews">
       <v-divider></v-divider>
         <v-img
-            :src="require('../assets/Group.png')"
+            :src="require('../../assets/Group.png')"
             contain
             height="50"
             max-width="100px"
@@ -11,7 +11,7 @@
             />
         <h2 class="text-uppercase">Reviews</h2>
         <v-img
-            :src="require('../assets/Group.png')"
+            :src="require('../../assets/Group.png')"
             contain
             height="50"
             max-width="100px"
@@ -19,7 +19,7 @@
       <v-divider></v-divider>
     </v-row>
     <div class="review" v-for="review in reviews" :key="review.id">
-      <Review :review="review"/>
+      <ReviewItem :review="review"/>
       <v-divider></v-divider>
     </div>
     <v-row justify="center" class="py-5 mt-5">
@@ -36,12 +36,12 @@
 </template>
 
 <script>
-import Review from './Review'
+import ReviewItem from './ReviewItem'
 
   export default {
     name: 'Reviews',
     components: {
-      Review
+      ReviewItem
     },
 
     data() {
@@ -67,7 +67,7 @@ import Review from './Review'
         data.perPage = 10
         this.$store.dispatch('fetchReviews', data)
           .then(result => this.reviews = result.data)
-        this.visible = false
+          this.visible = false
       }
     }
   }

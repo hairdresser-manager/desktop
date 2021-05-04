@@ -1,23 +1,24 @@
 import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
-import parseJwt from '../helpers/jwtDecode'
 
 Vue.use(Vuex)
-//axios.default.baseURL = 'http://localhost:8080/api/v1'
+const API = 'http://localhost:8080/api/v1'
 
 
 const state = {
-  token: localStorage.getItem('accessToken') || null,
-  refreshToken: localStorage.getItem('refreshToken') || null,
-  user: {},
+  user: JSON.parse(localStorage.getItem('user')) || null,
+  accountUser: [],
   reviews: [],
-  message: []
+  message: [],
+  appointments: [],
+  teamMembers: [],
+  availableDates: [],
 }
 
 const getters = {
   loggedIn(state) {
-    return state.token !== null
+    return state.user !== null
   },
   getUser(state) {
     return state.user
@@ -27,15 +28,54 @@ const getters = {
   },
   getMesasge(state) {
     return state.message
+  },
+  getAppointments(state){
+    return state.appointments
+  },
+  getTeamMembers(state){
+    return state.teamMembers
+  },
+  getDates(state){
+    return state.availableDates
   }
 }
 
 const actions = {
-  fetchReviews(context, pagination){
-    return new Promise((resolve, reject) => {
-      axios.get(`http://localhost:8080/api/v1/reviews?Page=${pagination.page}&PerPage=${pagination.perPage}`)
+
+  fetchDates({commit}) {
+    return new Promise((resolve,reject) => {
+      axios.get(`${API}/appointments/available-dates`)
         .then(result => {
-          context.commit('fetchReviews', result.data)
+          resolve(result)
+          commit('setDates', result.data)
+        })
+        .catch(error => reject(error))
+    })
+  },
+
+  fetchMembers({commit}) {
+      return new Promise((resolve, reject) => {
+      axios.get(`${API}/team-members`)
+        .then(result => {
+          resolve(result)
+          commit('setMembers', result.data)
+        })
+        .catch(error => reject(error))
+      })
+  },
+
+  fetchAppointments() {
+    return new Promise((resolve, reject) => {
+      axios.get(`${API}/appointments`)
+        .then(result => resolve(result))
+        .catch(error => reject(error))
+    })
+  },
+
+  resetPassword(context, email) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${API}/remind-password`, email)
+        .then(result => {
           resolve(result)
         })
         .catch(error => {
@@ -43,24 +83,28 @@ const actions = {
         })
     })
   },
-  decodeToken({commit}) {
-    try {
-      const token = localStorage.getItem('accessToken') || null;
-      const jwt = parseJwt(token);
-      commit('decodeToken', jwt.name)
-      console.log(jwt)
-    } catch (error) {
-      console.log(error)
-    }
+
+  fetchReviews(context, pagination){
+    return new Promise((resolve, reject) => {
+      axios.get(`${API}/reviews?Page=${pagination.page}&PerPage=${pagination.perPage}`)
+        .then(result => {
+          context.commit('setReviews', result.data)
+          resolve(result)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
   },
 
   register(context, data) {
     return new Promise((resolve, reject) => {
-      axios.post('http://localhost:8080/api/v1/register', data)
+      axios.post(`${API}/register`, data)
         .then(result => {
           resolve(result)
         })
         .catch(error => {
+          context.commit('setMessage', error.response.data)
           reject(error)
         })
     })
@@ -68,39 +112,31 @@ const actions = {
 
   login (context, data) {
     return new Promise((resolve, reject) => {
-      axios.post('http://localhost:8080/api/v1/login', data)
+      axios.post(`${API}/login`, data)
         .then(result => {
-          const token = result.data;
-          const tokens = { access: token.accessToken, refresh: token.refreshToken}
-          localStorage.setItem('accessToken', token.accessToken)
-          localStorage.setItem('refreshToken', token.refreshToken)
-          context.commit('retreiveTokens', tokens)
-          
+          localStorage.setItem('user', JSON.stringify(result.data))
+          context.commit('setUser', result.data)
           resolve(result)
         })
         .catch(error => {
           reject(error)
-          console.log(error.response)
-          context.commit('message', error.response.data.errors)
         })
     })
   },
 
 
-  logout(context) {
+  logout (context) {
     if(context.getters.loggedIn) {
       return new Promise((resolve, reject) => {
-        axios.post('http://localhost:8080/api/v1/logout', context.state.refreshToken)
+        axios.post(`${API}/logout`, context.state.refreshToken)
           .then(response => {
-            localStorage.removeItem('accessToken')
-            localStorage.removeItem('refreshToken')
-            context.commit('destroyTokens')
+            localStorage.removeItem('user')
+            context.commit('deleteUser')
             resolve(response)
           })
           .catch(error => {
-            localStorage.removeItem('accessToken')
-            localStorage.removeItem('refreshToken')
-            context.commit('destroyTokens')
+            localStorage.removeItem('user')
+            context.commit('deleteUser')
             reject(error)
           })
 
@@ -111,22 +147,26 @@ const actions = {
 
 
 const mutations = {
-  retreiveTokens(state, accessToken) {
-    state.token = accessToken.access,
-    state.refreshToken = accessToken.refresh
-  },
-  destroyTokens(state) {
-    state.token = null,
-    state.refreshToken = null
-  },
-  decodeToken(state, user) {
+  setUser(state, user){
     state.user = user
   },
-  fetchReviews(state, reviews){
+  deleteUser(state){
+    state.user = null
+  },
+  setReviews(state, reviews){
     state.reviews = reviews
   },
-  message(state, errors){
+  setMessage(state, errors){
     state.message = errors
+  },
+  setAppointments(state, appointments){
+    state.appointments = appointments
+  },
+  setMembers(state, members){
+    state.teamMembers = members
+  },
+  setDates(state, dates){
+    state.availableDates = dates
   }
 }
 
