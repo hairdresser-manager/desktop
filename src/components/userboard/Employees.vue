@@ -6,6 +6,10 @@
 
 <script>
 export default {
-    name: 'employees'
+    name: 'employees',
+    created(){
+        this.$store.dispatch('fetchEmployees')
+            .then(result => console.log(result))
+    }
 }
 </script>

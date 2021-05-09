@@ -8,10 +8,10 @@
                 <v-text-field label="First name" v-model="firstName" outlined hide-details></v-text-field>
             </v-col>
             <v-col>
-                <v-text-field label="Last name" v-model="updateAccount.lastName" outlined hide-details ></v-text-field>
+                <v-text-field label="Last name" v-model="lastName" outlined hide-details ></v-text-field>
             </v-col>
             <v-col>
-                <v-text-field label="Mobile phone" length="9" outlined v-model="updateAccount.mobilePhone" hide-details></v-text-field>
+                <v-text-field label="Mobile phone" length="9" outlined v-model="mobilePhone" hide-details></v-text-field>
             </v-col>
             <v-col>
             <v-btn elevation="2" outlined
@@ -48,32 +48,49 @@
 export default {
     name: 'profile',
     data: () => ({
-        updateAccount: {
-            firstName: '',
-            lastName: '',
-            mobilePhone: ''
-        },
         changePassword: {
             currentPassword: '',
             newPassword: '',
             reTypedNewPassword: ''
         }
     }),
-    created: {
-
+    created() {
+        this.$store.dispatch('fetchUser')
     },
     methods: {
         editAccount() {
-            console.log(this.updateAccount.firstName, this.updateAccount.lastName)
+            const data = {
+                firstName: this.firstName,
+                lastName: this.lastName,
+                mobilePhone: this.mobilePhone
+            }
+            console.log(data)
+            this.$store.dispatch('updateUser', data)
         }
     },
     computed: {
         firstName: {
             get () {
-                return this.$store.state.user.firstName
+                return this.$store.state.auth.accountUser.firstName
             },
             set (value) {
                 this.$store.commit('updateFirstName', value)
+            }
+        },
+        lastName: {
+            get () {
+                return this.$store.state.auth.accountUser.lastName
+            },
+            set (value) {
+                this.$store.commit('updateLastName', value)
+            }
+        },
+        mobilePhone: {
+            get () {
+                return this.$store.state.auth.accountUser.mobilePhone
+            },
+            set (value) {
+                this.$store.commit('updateMobilePhone', value)
             }
         }
   },

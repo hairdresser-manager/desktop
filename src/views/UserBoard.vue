@@ -82,7 +82,7 @@ export default {
     methods: {
         checkRole() {
             let allItems = this.items
-            const allRoles = this.$store.state.user.roles
+            const allRoles = this.$store.state.auth.user.roles
             let arrayRoles = [];
             let result
 

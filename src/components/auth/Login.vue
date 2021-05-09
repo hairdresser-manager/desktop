@@ -4,7 +4,7 @@
             <v-card class="w-100" width="100%" max-width="720px">
                 <h2 class="text-center py-5 sub-title">Zaloguj się do hairdresser</h2>
                 <ul v-if="errors" class="red--text">
-                    <li v-for="(v, k) in errors" :key="k">{{ v.join(' ') }}</li>
+                    <li v-for="(v, k) in errors" :key="k">{{ v }}</li>
                 </ul>
                 <v-form v-model="valid">
                     <v-col>

@@ -57,9 +57,6 @@ export default {
         loggedIn() {
             return this.$store.getters.loggedIn
         },
-        getUser() {
-            return this.$store.getters.getUser
-        }
     },
 }
     

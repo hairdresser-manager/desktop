@@ -3,7 +3,7 @@ import axios from 'axios';
 export default function setup() {
     axios.interceptors.request.use(function(config) {
         const user = JSON.parse(localStorage.getItem('user'));
-        if(user) {
+        if(user && user.accessToken) {
             config.headers.Authorization = `Bearer ${user.accessToken}`;
         }
         return config;
