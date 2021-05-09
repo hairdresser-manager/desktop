@@ -6,9 +6,12 @@ import SignUp from '../components/auth/SignUp'
 import Login from '../components/auth/Login'
 import Logout from '../components/auth/Logout'
 import PasswordRecovery from '../components/auth/PasswordRecovery'
-import UserProfile from '../components/userboard/UserProfile'
-import UserAppointments from '../components/userboard/UserAppointments'
-import UserReviews from '../components/userboard/UserReviews'
+import UserProfile from '../components/userboard/Profile'
+import UserAppointments from '../components/userboard/Appointments'
+import UserReviews from '../components/userboard/Reviews'
+import UserSchedule from '../components/userboard/Schedule'
+import UserEmployees from '../components/userboard/Employees'
+import UserServices from '../components/userboard/Services'
 
 Vue.use(VueRouter)
 
@@ -39,19 +42,34 @@ const routes = [
     component: Profile,
       children: [
         {
-          path: 'userprofile',
-          name: 'userprofile',
+          path: 'profile',
+          name: 'profile',
           component: UserProfile
         },
         {
-          path: 'userappointments',
-          name: 'userappointments',
+          path: 'appointments',
+          name: 'appointments',
           component: UserAppointments
         },
         {
-          path: 'userreviews',
-          name: 'userreviews',
+          path: 'reviews',
+          name: 'reviews',
           component: UserReviews
+        },
+        {
+          path: 'services',
+          name: 'services',
+          component: UserServices
+        },
+        {
+          path: 'schedule',
+          name: 'schedule',
+          component: UserSchedule
+        },
+        {
+          path: 'employess',
+          name: 'employess',
+          component: UserEmployees
         },
       ]
   },

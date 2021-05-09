@@ -5,7 +5,7 @@
         <v-subheader>Twoje dane</v-subheader>
         <v-form>
             <v-col>
-                <v-text-field label="First name" v-model="updateAccount.firstName" outlined hide-details></v-text-field>
+                <v-text-field label="First name" v-model="firstName" outlined hide-details></v-text-field>
             </v-col>
             <v-col>
                 <v-text-field label="Last name" v-model="updateAccount.lastName" outlined hide-details ></v-text-field>
@@ -46,7 +46,7 @@
 
 <script>
 export default {
-    name: 'userprofile',
+    name: 'profile',
     data: () => ({
         updateAccount: {
             firstName: '',
@@ -59,13 +59,24 @@ export default {
             reTypedNewPassword: ''
         }
     }),
-    created() {
-        this.updateAccount.firstName = this.$store.getters.getUser.firstName
+    created: {
+
     },
     methods: {
         editAccount() {
             console.log(this.updateAccount.firstName, this.updateAccount.lastName)
         }
     },
+    computed: {
+        firstName: {
+            get () {
+                return this.$store.state.user.firstName
+            },
+            set (value) {
+                this.$store.commit('updateFirstName', value)
+            }
+        }
+  },
+    
 }
 </script>

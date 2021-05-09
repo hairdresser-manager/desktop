@@ -1,6 +1,5 @@
 <template>
   <v-app id="app">
-
     <v-main>
       <Header />
       <transition name="component-fade" mode="out-in" >

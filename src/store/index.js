@@ -8,9 +8,8 @@ const API = 'http://localhost:8080/api/v1'
 
 const state = {
   user: JSON.parse(localStorage.getItem('user')) || null,
-  accountUser: [],
   reviews: [],
-  message: [],
+  errors: null,
   appointments: [],
   teamMembers: [],
   availableDates: [],
@@ -26,9 +25,6 @@ const getters = {
   getReviews(state) {
     return state.reviews
   },
-  getMesasge(state) {
-    return state.message
-  },
   getAppointments(state){
     return state.appointments
   },
@@ -41,6 +37,17 @@ const getters = {
 }
 
 const actions = {
+
+  fetchUser({commit}){
+    return new Promise((resolve, reject) => {
+      axios.get(`${API}/accounts/me`)
+        .then(result => {
+          resolve(result)
+          commit('setUser', result.data)
+        })
+        .catch(error => reject(error))
+    })
+  },
 
   fetchDates({commit}) {
     return new Promise((resolve,reject) => {
@@ -104,7 +111,7 @@ const actions = {
           resolve(result)
         })
         .catch(error => {
-          context.commit('setMessage', error.response.data)
+          context.commit('setError', error.response.data.errors)
           reject(error)
         })
     })
@@ -119,6 +126,7 @@ const actions = {
           resolve(result)
         })
         .catch(error => {
+          context.commit('setError', error.response.data.errors)
           reject(error)
         })
     })
@@ -143,12 +151,13 @@ const actions = {
       })  
     }
   },
+
 }
 
 
 const mutations = {
   setUser(state, user){
-    state.user = user
+    state.user = user;
   },
   deleteUser(state){
     state.user = null
@@ -156,8 +165,11 @@ const mutations = {
   setReviews(state, reviews){
     state.reviews = reviews
   },
-  setMessage(state, errors){
-    state.message = errors
+  setError(state, error){
+    state.errors = error
+  },
+  clearError(state){
+    state.errors = null
   },
   setAppointments(state, appointments){
     state.appointments = appointments

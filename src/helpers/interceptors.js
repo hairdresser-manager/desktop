@@ -1,12 +1,10 @@
 import axios from 'axios';
 
-
 export default function setup() {
     axios.interceptors.request.use(function(config) {
-        
-        const token = JSON.parse(localStorage.getItem('user'));
-        if(token) {
-            config.headers.Authorization = `Bearer ${token.accessToken}`;
+        const user = JSON.parse(localStorage.getItem('user'));
+        if(user) {
+            config.headers.Authorization = `Bearer ${user.accessToken}`;
         }
         return config;
     }, function(err) {

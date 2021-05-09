@@ -6,7 +6,7 @@
         contain
         height="auto"
         />
-        <div class="home__Box text-h5" v-text="'our services'"></div>
+        <div class="home-box text-h5 text-uppercase" v-text="'our services'"></div>
     </div>
     <v-container class="home">
       <Expansion :lists="expansionLists"/>
@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style>
-.home__Box{
+.home-box{
   position: absolute;
   left: 50%;
   bottom: -60px;

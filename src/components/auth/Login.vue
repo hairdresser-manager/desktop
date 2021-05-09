@@ -3,16 +3,9 @@
         <v-row justify="center">
             <v-card class="w-100" width="100%" max-width="720px">
                 <h2 class="text-center py-5 sub-title">Zaloguj się do hairdresser</h2>
-                <div v-if="error">
-                    <v-list 
-                        dense>
-                        <v-list-item>
-                        <v-list-item-title class="red--text">
-                            {{ getMessage }}
-                        </v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </div>
+                <ul v-if="errors" class="red--text">
+                    <li v-for="(v, k) in errors" :key="k">{{ v.join(' ') }}</li>
+                </ul>
                 <v-form v-model="valid">
                     <v-col>
                         <v-text-field 
@@ -54,6 +47,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: 'login',
   components: {
@@ -68,33 +62,30 @@ export default {
             v => !!v || 'E-mail is required',
             v => /.+@.+/.test(v) || 'E-mail must be valid',
         ],
-        error: false,
         password: '',
       }
   },
-  computed: {
-    getMessage() {
-        return this.$store.state.message
-    }  
+  created(){
+      this.$store.commit('clearError')
   },
   methods: {
-    login () {
+    login () {    
         const data = {
             email: this.email,
             password: this.password
         }
         this.$store.dispatch('login', data)
             .then(() => this.$router.push({path: '/home'}))
-            .catch(() => {
-                this.error = true
-            })
     },
 
     async logInWithFacebook () {
         console.log(this.email, this.password)
     },
-    
-
-  }
+  },
+  computed: {
+    ...mapState( {
+        errors: state => state.errors
+    })
+  },
 }
 </script>

@@ -8,7 +8,12 @@
     <swiper-slide 
       v-for="member in items"
       :key="member.id">
-        {{ member.firstName }}
+      <div class="text-center text-h5">{{ member.firstName }}</div>
+      <v-img 
+        contain
+        height="100%"
+        :src="member.avatarUrl">
+      </v-img>
       </swiper-slide>
       
       

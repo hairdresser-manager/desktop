@@ -3,16 +3,9 @@
         <v-row justify="center">
             <v-card class="w-100" width="100%" max-width="720px">
                 <h2 class="text-center py-5 sub-title">Zarejestruj się do hairdresser</h2>
-                <div v-if="error" class="alert alert-danger">
-                    <v-list 
-                        dense>
-                        <v-list-item>
-                        <v-list-item-title class="red--text">
-                            {{ getMessage }}
-                        </v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </div>
+                <ul v-if="errors" class="red--text">
+                    <li v-for="(v, k) in errors" :key="k">{{ v.join(' ') }}</li>
+                </ul>
                 <div v-if="success" class="alert alert-danger">
                     <v-list 
                         dense>
@@ -61,12 +54,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: 'signup',
   components: {
 
   },
-
   data() {
       return {
             email: '',
@@ -79,10 +72,8 @@ export default {
             success: false,
       }
   },
-  computed: {
-    getMessage() {
-        return this.$store.state.message
-    }  
+  created(){
+      this.$store.commit('clearError')
   },
   methods: {
     signup () {
@@ -100,10 +91,12 @@ export default {
         .then(() => {
             this.success = true
         })
-        .catch(() => {
-            this.error = true
-        })
       }
-  }
+  },
+  computed: {
+    ...mapState( {
+        errors: state => state.errors
+    })
+  },
 }
 </script>

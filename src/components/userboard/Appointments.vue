@@ -43,7 +43,7 @@
 
 <script>
 export default {
-    name: 'userappointments',
+    name: 'appointments',
     data: () => ({
         appointments: []
     }),
