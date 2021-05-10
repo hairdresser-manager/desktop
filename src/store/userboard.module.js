@@ -13,20 +13,25 @@ const getters = {
     },
     getEmployeeId(state) {
         return state.employeeId
+    },
+    getEmployee(state) {
+        return state.employees[state.employeeId-1]
     }
 }
 
 const actions = {
 
     editEmployee(context, { id, data }){
+        console.log(data)
         return new Promise((resolve, reject) => {
             axios.put(`${API}/employees/${id}`, data)
                 .then(result => {  
                     resolve(result)
                     context.commit('editEmployee', { id, data })
+                    
                 })
                 .catch(error => {
-                    
+                    console.log(error.response)
                     reject(error)
                 })
             }) 
@@ -37,6 +42,8 @@ const actions = {
             axios.post(`${API}/employees`, data)
                 .then(result => {
                     resolve(result)
+                    console.log(result)
+                    commit('setEmployeeId', result.data.employeeId)
                     commit('addEmployee', data)
                 })
                 .catch(error => {

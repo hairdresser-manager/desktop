@@ -35,6 +35,19 @@ const getters = {
 
 const actions = {
 
+  changePassword({commit}, data){
+    return new Promise((resolve, reject) => {
+      axios.post(`${API}/accounts/change-password`, data)
+        .then(result => {
+          resolve(result)
+        })
+        .catch(error => {
+          commit('setError', error.response.data.errors)
+          reject(error)
+        })
+    })
+  },
+
   updateUser(context, data){
     return new Promise((resolve, reject) => {
       axios.put(`${API}/accounts`, data)

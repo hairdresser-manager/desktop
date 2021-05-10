@@ -25,7 +25,7 @@
               >ADD</v-btn>
           </v-col>              
       </v-form>
-      <EditEmployee v-else :id="employeeId"/>
+      <EditEmployee v-else />
       </v-card-text>
       <v-card-actions>
         <v-btn color="#E10050" text @click.stop="show=false">Close</v-btn>
@@ -52,18 +52,22 @@ export default {
           v => /.+@.+/.test(v) || 'E-mail must be valid',
       ],
       isEmailCorrect: false,
-      employeeId: null,
       errors: null,
   }),
   methods: {
     addEmployee(){
       const data = {
-        email: this.email
+        email: this.email,
+        active: false,
+        nick: null,
+        avatarUrl: null,
+        description: null,
+        lowQualityAvatarUrl: null,
       }
       this.$store.dispatch('addEmployee', data)
-        .then(result => {
-          this.employeeId = result.data.employeeId
+        .then(() => {
           this.isEmailCorrect = true
+          this.$store.dispatch('fetchEmployees')
         })
         .catch(error => this.errors = error.response.data)
         
