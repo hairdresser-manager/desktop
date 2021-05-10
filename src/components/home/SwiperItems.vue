@@ -14,8 +14,8 @@
       
       
       
-    <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
-    <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
+    <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
+    <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
   </swiper>
 
   

@@ -3,28 +3,30 @@ import axios from 'axios'
 const API = 'http://localhost:8080/api/v1'
 
 const state = {
+    employeeId: null,
     employees: []
 }
 
 const getters = {
     getEmployees(state) {
         return state.employees
+    },
+    getEmployeeId(state) {
+        return state.employeeId
     }
 }
 
 const actions = {
 
-    editEmployee(context,{ id, data }){
-        console.log(data)
+    editEmployee(context, { id, data }){
         return new Promise((resolve, reject) => {
             axios.put(`${API}/employees/${id}`, data)
-                .then(result => {
-                    console.log(data)
+                .then(result => {  
                     resolve(result)
-                    console.log(result)
+                    context.commit('editEmployee', { id, data })
                 })
                 .catch(error => {
-                    console.log(error.response)
+                    
                     reject(error)
                 })
             }) 
@@ -55,6 +57,13 @@ const actions = {
 }
 
 const mutations = {
+    setEmployeeId(state, id){
+        state.employeeId = id
+    },
+    editEmployee(state, {id, data}){
+        const index = state.employees.findIndex( employee => employee.id === id )
+        Object.assign(state.employees[index], data)
+    },
     setEmployees(state, employee){
         state.employees = employee
     },

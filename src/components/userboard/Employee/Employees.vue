@@ -4,9 +4,9 @@
             <h2>Employees</h2>
             <v-btn class="red-btn" outlined dark @click.stop="addEmployee=true">add</v-btn>
             <AddEmployee v-model="addEmployee" />
-            <EmployeeDialog v-model="showEdit" :id="employeeId"/>
+            <EmployeeDialog v-model="showEdit" :id="getEmployeeId"/>
         </v-row>
-            <v-card class="ma-6" v-for="employee in employees" :key="employee.id" @click="editEmployee(employee.id)">
+            <v-card class="ma-6" v-for="employee in getEmployees" :key="employee.id" @click="editEmployee(employee.id)">
                 
                  <v-list-item three-line>
                     <v-list-item-content>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 import AddEmployee from './AddEmployee'
 import EmployeeDialog from './EmployeeDialog'
 export default {
@@ -69,12 +69,11 @@ export default {
             this.showEdit = true
             this.employeeId = id
             console.log(id)
+            this.$store.commit('setEmployeeId', id)
         }
     },
     computed: {
-        ...mapState( {
-        employees: state => state.userboard.employees
-    })
+        ...mapGetters(['getEmployees','getEmployeeId'])
     }
 }
 </script>

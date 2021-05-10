@@ -1,10 +1,9 @@
 <template>
     <v-container>
         <v-row>
-            <v-col justify="center" class="col-4">
+            <v-col justify="center" class="col-3">
                 <v-card
                     class="mx-auto py-5"
-                    max-width="300"
                     tile
                 >
                     <v-list dense>

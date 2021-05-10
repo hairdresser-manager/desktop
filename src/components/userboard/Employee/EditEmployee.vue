@@ -70,7 +70,7 @@ export default {
         active: this.active
       }
 
-      this.$store.dispatch('editEmployee',{ id, data })
+      this.$store.dispatch('editEmployee', { id, data })
     }
   },
 }
