@@ -14,6 +14,34 @@ const getters = {
 
 const actions = {
 
+    editEmployee(context,{ id, data }){
+        console.log(data)
+        return new Promise((resolve, reject) => {
+            axios.put(`${API}/employees/${id}`, data)
+                .then(result => {
+                    console.log(data)
+                    resolve(result)
+                    console.log(result)
+                })
+                .catch(error => {
+                    console.log(error.response)
+                    reject(error)
+                })
+            }) 
+    },
+
+    addEmployee({commit}, data){
+        return new Promise((resolve, reject) => {
+            axios.post(`${API}/employees`, data)
+                .then(result => {
+                    resolve(result)
+                    commit('addEmployee', data)
+                })
+                .catch(error => {
+                    reject(error)
+                })
+            })   
+    },
     fetchEmployees({commit}){
         return new Promise((resolve, reject) => {
             axios.get(`${API}/employees`)
@@ -29,6 +57,9 @@ const actions = {
 const mutations = {
     setEmployees(state, employee){
         state.employees = employee
+    },
+    addEmployee(state, employee){
+        state.employees = state.employees.concat(employee)
     }
 }
 

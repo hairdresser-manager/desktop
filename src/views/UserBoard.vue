@@ -60,12 +60,13 @@ export default {
             },
             items: {
                 user: [
+                    { title: 'Wizyty', path: '/userboard/appointments'},
                     { title: 'Opinie', path: '/userboard/reviews'},
                     { title: 'Ustawienia konta', path: '/userboard/profile'},
                     { title: 'Wyloguj', path: '/logout'}
                 ],
                 employee: [
-                    { title: 'Wizyty', path: '/userboard/appointments'},
+                    { title: 'Harmonogram', path: '/userboard/schedule'},
                     
                 ],
                 admin: [
@@ -88,7 +89,12 @@ export default {
 
             allRoles.map( item => {
                 arrayRoles.push(...allItems[item.toLowerCase()])
-                result = arrayRoles.concat(allItems['user'])
+                if(!allRoles.includes('User')){
+                    result = arrayRoles.concat(allItems['user'])
+                } else {
+                    result = allItems['user']
+                }
+                
             })
 
             return result

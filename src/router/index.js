@@ -10,7 +10,7 @@ import UserProfile from '../components/userboard/Profile'
 import UserAppointments from '../components/userboard/Appointments'
 import UserReviews from '../components/userboard/Reviews'
 import UserSchedule from '../components/userboard/Schedule'
-import UserEmployees from '../components/userboard/Employees'
+import UserEmployees from '../components/userboard/Employee/Employees'
 import UserServices from '../components/userboard/Services'
 
 Vue.use(VueRouter)

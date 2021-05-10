@@ -64,7 +64,6 @@ export default {
                 lastName: this.lastName,
                 mobilePhone: this.mobilePhone
             }
-            console.log(data)
             this.$store.dispatch('updateUser', data)
         }
     },

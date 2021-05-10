@@ -40,7 +40,6 @@ const actions = {
       axios.put(`${API}/accounts`, data)
         .then(result => {
           resolve(result)
-          console.log(result)
         })
         .catch(error => reject(error))
       })
@@ -112,6 +111,18 @@ const actions = {
     })
   },
 
+  verifyEmail(context, data){
+    return new Promise((resolve, reject) => {
+      axios.post(`${API}/register/verify-email`, data)
+        .then(result => {
+          resolve(result)
+        })
+        .catch(error => {
+          reject(error)
+        })
+      })
+  },
+
   register({commit}, data) {
     return new Promise((resolve, reject) => {
       axios.post(`${API}/register`, data)
@@ -119,6 +130,7 @@ const actions = {
           resolve(result)
         })
         .catch(error => {
+          console.log(error.response)
           commit('setError', error.response.data.errors)
           reject(error)
         })

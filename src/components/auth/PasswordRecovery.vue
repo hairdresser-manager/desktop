@@ -2,8 +2,8 @@
     <v-container>   
         <v-row justify="center">
             <v-card class="w-100" width="100%" max-width="720px">
-                <h2 class="text-center py-5 sub-title">Zresetuj hasło</h2>
-                <h4 class="text-center py-5 sub-title">Podaj adres email</h4>
+                <h2 class="text-center py-5 sub-title">Password recovery</h2>
+                <h4 class="text-center py-5 sub-title">Your email:</h4>
                 <v-form v-model="valid" >
                     <v-col>
                         <v-text-field 
@@ -21,7 +21,7 @@
                             color="#E10050"
                             @click="resetPassword"
                             :disabled="!valid"
-                        >zresetuj hasło</v-btn>
+                        >send</v-btn>
                     </v-col>
                         
                 </v-form>

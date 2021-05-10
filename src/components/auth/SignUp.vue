@@ -2,16 +2,16 @@
     <v-container>   
         <v-row justify="center">
             <v-card class="w-100" width="100%" max-width="720px">
-                <h2 class="text-center py-5 sub-title">Zarejestruj się do hairdresser</h2>
+                <h2 class="text-center py-5 sub-title">Sign up to hairdresser</h2>
                 <ul v-if="errors" class="red--text">
-                    <li v-for="(v, k) in errors" :key="k">{{ v.join(' ') }}</li>
+                    <li v-for="(v, k) in errors" :key="k">{{ v }}</li>
                 </ul>
                 <div v-if="success" class="alert alert-danger">
                     <v-list 
                         dense>
                         <v-list-item>
-                        <v-list-item-title class="green--text">
-                            Potwierdz adres email
+                        <v-list-item-title class="red-btn text-uppercase">
+                            Verify your email <v-btn class="red-btn" text outlined dark @click="verifyEmail">Click here</v-btn>
                         </v-list-item-title>
                         </v-list-item>
                     </v-list>
@@ -70,13 +70,15 @@ export default {
             mobilePhone: '',
             error: false,
             success: false,
+            token: '',
+
       }
   },
   created(){
       this.$store.commit('clearError')
   },
   methods: {
-    signup () {
+    signup() {
         const data = {
             email: this.email,
             password: this.password,
@@ -88,10 +90,22 @@ export default {
         console.log(data)
 
     this.$store.dispatch('register', data)
-        .then(() => {
+        .then(result => {
+            console.log(result.data)
+            this.token = result.data.verifyToken
             this.success = true
         })
-      }
+    },
+    verifyEmail() {
+        const data = {
+            email: this.email,
+            token: this.token
+        }
+        console.log(data)
+        this.$store.dispatch('verifyEmail', data)
+            .then(() => this.$router.push({path: '/home'}))
+    }
+
   },
   computed: {
     ...mapState( {

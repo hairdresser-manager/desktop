@@ -53,7 +53,6 @@ export default {
     methods:{
         changeDate(e){
             this.dateIndex = e
-            console.log(this.dateIndex)
         },
         
         

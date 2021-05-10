@@ -2,7 +2,7 @@
     <v-container>   
         <v-row justify="center">
             <v-card class="w-100" width="100%" max-width="720px">
-                <h2 class="text-center py-5 sub-title">Zaloguj się do hairdresser</h2>
+                <h2 class="text-center py-5 sub-title">Login to hairdresser</h2>
                 <ul v-if="errors" class="red--text">
                     <li v-for="(v, k) in errors" :key="k">{{ v }}</li>
                 </ul>
@@ -18,14 +18,19 @@
                         ></v-text-field>
                     </v-col>
                     <v-col >
-                        <v-text-field label="Password" type="password" outlined v-model="password" hide-details></v-text-field>
+                        <v-text-field 
+                            label="Password" 
+                            type="password" 
+                            outlined 
+                            v-model="password" 
+                            hide-details></v-text-field>
                     </v-col>
                     <v-col>
                         <v-row>
                             <v-col>
-                                <v-btn route :to="'/signup'" text>Zarejestruj się</v-btn>
+                                <v-btn route :to="'/signup'" text>Sign up</v-btn>
                                 <v-spacer></v-spacer>
-                                <v-btn text :to="'/passwordrecovery'">Zresetuj hasło</v-btn>
+                                <v-btn text :to="'/passwordrecovery'">Password recovery</v-btn>
                             </v-col>
                         </v-row>
                         
@@ -60,7 +65,7 @@ export default {
         email: '',
         emailRules: [
             v => !!v || 'E-mail is required',
-            v => /.+@.+/.test(v) || 'E-mail must be valid',
+            v => /.+@.+/.test(v) || 'E-mail is invalid',
         ],
         password: '',
       }
@@ -84,7 +89,7 @@ export default {
   },
   computed: {
     ...mapState( {
-        errors: state => state.errors
+        errors: state => state.auth.errors
     })
   },
 }

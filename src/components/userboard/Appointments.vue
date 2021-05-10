@@ -33,7 +33,7 @@
                         outlined
                         :text-color="appointment.rated ? 'green' : 'red'"
                     >
-                       {{ appointment.rated ? 'oceniono' : 'nieoceniono'}}
+                       {{ appointment.rated ? 'rated' : 'unrated'}}
                     </v-chip>
                     </v-card-actions>
             </v-card>
