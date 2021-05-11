@@ -10,6 +10,7 @@ const state = {
   appointments: [],
   teamMembers: [],
   availableDates: [],
+  services: [],
 }
 
 const getters = {
@@ -30,10 +31,25 @@ const getters = {
   },
   getDates(state){
     return state.availableDates
+  },
+  getServices(state){
+    return state.services
   }
 }
 
 const actions = {
+
+  fetchServices({commit}){
+    return new Promise((resolve, reject) => {
+      axios.get(`${API}/offers/services`)
+        .then(result => {
+          resolve(result)
+          console.log(result.data)
+          commit('setServices', result.data)
+        })
+        .catch(error => reject(error))
+      })
+  },
 
   changePassword({commit}, data){
     return new Promise((resolve, reject) => {
@@ -82,7 +98,7 @@ const actions = {
 
   fetchMembers({commit}) {
       return new Promise((resolve, reject) => {
-      axios.get(`${API}/team-members`)
+      axios.get(`${API}/offers/team-members`)
         .then(result => {
           resolve(result)
           commit('setMembers', result.data)
@@ -190,6 +206,9 @@ const actions = {
 
 
 const mutations = {
+  setServices(state, service){
+    state.services = service
+  },
   updateFirstName(state, value){
     state.accountUser.firstName = value
   },

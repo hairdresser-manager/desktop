@@ -78,7 +78,7 @@ export default {
       ]
   }),
   created(){
-      console.log(this.getEmployeeId)
+      this.$store.commit('clearError')
   },
   methods: {
     editEmployee(){

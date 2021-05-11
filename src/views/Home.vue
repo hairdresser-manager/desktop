@@ -9,7 +9,7 @@
         <div class="home-box text-h5 text-uppercase" v-text="'our services'"></div>
     </div>
     <v-container class="home">
-      <Expansion :lists="expansionLists"/>
+      <Expansion />
       <Swiper />
       <Reviews /> 
     </v-container>
@@ -29,22 +29,6 @@ export default {
     Swiper,
     Reviews
   },
-
-  data() {
-    return {
-      expansionLists: [
-        { title: "Popular services", text: "Precision cut shaped to your request . Styling not included in this price" },
-        { 
-          title: "Hair Care / Cut / Styling", 
-          content: [
-            { title: "Hair Cut", text: "Precision cut shaped to your request . Styling not included in this price", price: "$40.00+" },
-            { title: "Blow Out and Style", text: " This service is recommended for clients with relaxed , or fine textured hair. We shampoo , condition, and blow out the hair before styling", price: "$65.00+" }
-          ]
-        },
-      ],
-    }
-  },
-
 }
 </script>
 
