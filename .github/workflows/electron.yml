@@ -4,8 +4,8 @@ name: CI
 on:
   push:
     branches:
-    # this will run on the electron branch
-      - electron
+    - main
+    - release/*
 # this is where the magic happens, each job happens in parallel btw
 jobs:
   build_on_mac:
