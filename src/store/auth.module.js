@@ -44,7 +44,6 @@ const actions = {
       axios.get(`${API}/offers/services`)
         .then(result => {
           resolve(result)
-          console.log(result.data)
           commit('setServices', result.data)
         })
         .catch(error => reject(error))
@@ -89,6 +88,7 @@ const actions = {
     return new Promise((resolve,reject) => {
       axios.get(`${API}/appointments/available-dates`)
         .then(result => {
+          console.log(result.data)
           resolve(result)
           commit('setDates', result.data)
         })
