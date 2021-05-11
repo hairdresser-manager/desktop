@@ -50,7 +50,6 @@ export default {
     created() {
         this.$store.dispatch('fetchAppointments')
             .then((result => this.appointments = result.data))
-            .catch(error => console.log(error))
 
     }
 }

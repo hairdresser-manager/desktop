@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API = 'http://localhost:8080/api/v1'
+const API = 'https://hairdresser-manager.azurewebsites.net/api/v1'
 
 const state = {
     employeeId: null,
@@ -31,7 +31,6 @@ const actions = {
                     
                 })
                 .catch(error => {
-                    console.log(error.response)
                     reject(error)
                 })
             }) 
@@ -42,7 +41,6 @@ const actions = {
             axios.post(`${API}/employees`, data)
                 .then(result => {
                     resolve(result)
-                    console.log(result)
                     commit('setEmployeeId', result.data.employeeId)
                     commit('addEmployee', data)
                 })

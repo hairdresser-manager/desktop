@@ -60,9 +60,6 @@ export default {
     },
     created(){
         this.$store.dispatch('fetchEmployees')
-            .then(result => {
-                console.log(result)
-            })
     },
     methods: {
         editEmployee(id){

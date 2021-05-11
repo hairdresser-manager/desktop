@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "electron-builder": "^22.11.3",
     "swiper": "^5.4.5",
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.1",
@@ -31,6 +32,7 @@
     "babel-eslint": "^10.1.0",
     "electron": "^9.0.0",
     "electron-devtools-installer": "^3.1.0",
+    "electron-packager": "^15.2.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.32.0",
@@ -40,4 +42,5 @@
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.7.0"
   }
+
 }

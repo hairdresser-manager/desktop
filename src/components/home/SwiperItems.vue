@@ -52,7 +52,6 @@
         .then(result => {
           this.items = result.data
           })
-        .catch(error => console.log(error))
     }
   }
 </script>
@@ -61,7 +60,6 @@
   @import './base.scss';
 
   img{
-    object-fit: contain;
     width: 100%;
     height: 100%;
   }

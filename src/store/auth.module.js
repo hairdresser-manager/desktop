@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API = 'http://localhost:8080/api/v1'
+const API = 'https://hairdresser-manager.azurewebsites.net/api/v1'
 
 const state = {
   user: JSON.parse(localStorage.getItem('user')) || null,
@@ -88,7 +88,6 @@ const actions = {
     return new Promise((resolve,reject) => {
       axios.get(`${API}/appointments/available-dates`)
         .then(result => {
-          console.log(result.data)
           resolve(result)
           commit('setDates', result.data)
         })
@@ -159,7 +158,6 @@ const actions = {
           resolve(result)
         })
         .catch(error => {
-          console.log(error.response)
           commit('setError', error.response.data.errors)
           reject(error)
         })
@@ -175,7 +173,6 @@ const actions = {
           resolve(result)
         })
         .catch(error => {
-          console.log(error.response)
           commit('setError', error.response.data.errors || error.response.data)
           reject(error)
         })

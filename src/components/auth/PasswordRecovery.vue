@@ -47,8 +47,6 @@ export default {
                 email: this.email
             }
             this.$store.dispatch('resetPassword', email)
-                .then(result => console.log(result))
-                .catch(error => console.log(error))
         }
     }
 }

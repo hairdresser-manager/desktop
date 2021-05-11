@@ -87,11 +87,9 @@ export default {
             lastname: this.lastname,
             mobilePhone: this.mobilePhone
         }
-        console.log(data)
 
     this.$store.dispatch('register', data)
         .then(result => {
-            console.log(result.data)
             this.token = result.data.verifyToken
             this.success = true
         })
@@ -101,7 +99,6 @@ export default {
             email: this.email,
             token: this.token
         }
-        console.log(data)
         this.$store.dispatch('verifyEmail', data)
             .then(() => this.$router.push({path: '/home'}))
     }

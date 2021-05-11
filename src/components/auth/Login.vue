@@ -41,7 +41,7 @@
                             :disabled="!valid"
                             @click="login">Login</v-btn>
                         <v-row align="center" class="px-5 py-5"><v-divider></v-divider><span class="px-5 grey--text text--darken-1">or</span><v-divider></v-divider></v-row>
-                        <v-btn @click="logInWithFacebook" width="100%" color="primary" class="my-3"> Login with Facebook</v-btn>
+                        <v-btn width="100%" color="primary" class="my-3"> Login with Facebook</v-btn>
                     </v-col>
                 </v-form>
             </v-card>
@@ -83,9 +83,6 @@ export default {
             .then(() => this.$router.push({path: '/home'}))
     },
 
-    async logInWithFacebook () {
-        console.log(this.email, this.password)
-    },
   },
   computed: {
     ...mapState( {
